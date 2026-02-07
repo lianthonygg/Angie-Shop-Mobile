@@ -5,6 +5,7 @@ junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 koinAndroid = "4.1.1"
+ktorAndroid = "3.4.0"
 lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.12.2"
 kotlin = "2.0.21"
@@ -30,6 +31,10 @@ androidx-compose-material3-adaptive-navigation-suite = { group = "androidx.compo
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koinAndroid" }
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koinAndroid" }
 koin-androidx-navigation = { module = "io.insert-koin:koin-androidx-navigation", version.ref = "koinAndroid" }
+ktor-client-json = { module = "io.ktor:ktor-client-json", version.ref = "ktorAndroid" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorAndroid" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorAndroid" }
+ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktorAndroid" }
 supabase-kt = { module = "io.github.jan-tennert.supabase:supabase-kt", version.ref = "supabaseKt" }
 postgrest-kt = { module = "io.github.jan-tennert.supabase:postgrest-kt", version.ref = "supabaseKt" }
 auth-kt = { module = "io.github.jan-tennert.supabase:auth-kt", version.ref = "supabaseKt" }
@@ -38,4 +43,5 @@ supabase-storage-kt = { module = "io.github.jan-tennert.supabase:storage-kt", ve
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 

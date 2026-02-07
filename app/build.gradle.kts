@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -52,6 +53,12 @@ dependencies {
     implementation (libs.koin.android)
     implementation (libs.koin.androidx.navigation)
     implementation (libs.koin.androidx.compose)
+
+    //Ktor
+    implementation(libs.ktor.client.android)
+    implementation(libs.ktor.client.json)
+    implementation(libs.ktor.client.serialization)
+    implementation(libs.ktor.client.logging)
 
     //Supabase
     implementation(libs.supabase.kt)

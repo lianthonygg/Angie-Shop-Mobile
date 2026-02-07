@@ -1,5 +1,9 @@
 package com.zyphir.eccomerce.angieshop.shared.modules
 
+import com.zyphir.eccomerce.angieshop.features.store.data.repository.StoreRepositoryImpl
+import com.zyphir.eccomerce.angieshop.features.store.domain.mappers.ProductMapper
+import com.zyphir.eccomerce.angieshop.features.store.domain.repository.StoreRepository
+import com.zyphir.eccomerce.angieshop.features.store.domain.usecases.StoreUseCase
 import com.zyphir.eccomerce.angieshop.features.store.presentation.viewmodels.StoreViewModel
 import io.github.jan.supabase.auth.Auth
 import io.github.jan.supabase.createSupabaseClient
@@ -9,7 +13,7 @@ import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
-    viewModel { StoreViewModel() }
+    viewModel { StoreViewModel(get()) }
 }
 
 val supabaseModule = module {
@@ -22,5 +26,23 @@ val supabaseModule = module {
             install(Auth)
             install(Storage)
         }
+    }
+}
+
+val storeRepositoryModule = module {
+    single<StoreRepository> {
+        StoreRepositoryImpl(get())
+    }
+}
+
+val productMapperModule = module {
+    single {
+        ProductMapper()
+    }
+}
+
+val storeUseCaseModule = module {
+    single {
+        StoreUseCase(get(), get())
     }
 }
