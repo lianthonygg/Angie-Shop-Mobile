@@ -1,5 +1,11 @@
 package com.zyphir.eccomerce.angieshop.shared.modules
 
+import android.content.Context
+import coil3.ImageLoader
+import coil3.disk.DiskCache
+import coil3.disk.directory
+import coil3.memory.MemoryCache
+import coil3.request.crossfade
 import com.zyphir.eccomerce.angieshop.features.store.data.repository.StoreRepositoryImpl
 import com.zyphir.eccomerce.angieshop.features.store.domain.mappers.ProductMapper
 import com.zyphir.eccomerce.angieshop.features.store.domain.repository.StoreRepository
@@ -14,13 +20,33 @@ import org.koin.dsl.module
 
 val appModule = module {
     viewModel { StoreViewModel(get()) }
+
+//    single<ImageLoader> {
+//        val context: Context = get()
+//        ImageLoader.Builder(context)
+//            .memoryCache {
+//                MemoryCache.Builder()
+//                    .maxSizePercent(context)
+//                    .build()
+//            }
+//            .diskCache {
+//                DiskCache.Builder()
+//                    .directory(context.cacheDir.resolve("coil_images"))
+//                    .maxSizePercent(0.02)
+//                    .build()
+//            }
+//            .crossfade(true)
+//            .build()
+//    }
 }
+
+
 
 val supabaseModule = module {
     single {
         createSupabaseClient(
-            supabaseUrl = "",
-            supabaseKey = ""
+            supabaseUrl = "https://fanzjptylyuvwvlotopk.supabase.co",
+            supabaseKey = "sb_publishable_yV8ez4b2ZAzWoeTsDM98vw_UltbtoTl"
         ) {
             install(Postgrest)
             install(Auth)

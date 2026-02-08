@@ -1,5 +1,6 @@
 package com.zyphir.eccomerce.angieshop.features.store.domain.model
 
+import androidx.compose.runtime.Immutable
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -19,6 +20,7 @@ data class ProductBack(
     val productCategories: List<ProductCategory>
 )
 
+@Immutable
 data class Product(
     val id: String,
     val slug: String,

@@ -75,9 +75,9 @@ enum class AppDestinations(
     val label: String,
     val icon: ImageVector,
 ) {
-    STORE("Store", Icons.Default.Home),
-    CART("Cart", Icons.Default.ShoppingCart),
-    PROFILE("Profile", Icons.Default.AccountBox),
+    STORE("Tienda", Icons.Default.Home),
+    CART("Carrito", Icons.Default.ShoppingCart),
+    PROFILE("Perfil", Icons.Default.AccountBox),
 }
 
 @Composable
@@ -86,12 +86,4 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         text = "Hello $name!",
         modifier = modifier
     )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AngieShopTheme {
-        Greeting("Android")
-    }
 }

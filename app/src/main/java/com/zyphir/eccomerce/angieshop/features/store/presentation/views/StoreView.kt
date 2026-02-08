@@ -1,17 +1,14 @@
 package com.zyphir.eccomerce.angieshop.features.store.presentation.views
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,9 +16,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.zyphir.eccomerce.angieshop.features.store.domain.model.Product
+import com.zyphir.eccomerce.angieshop.features.store.domain.model.StoreUiItem
 import com.zyphir.eccomerce.angieshop.features.store.presentation.viewmodels.StoreViewModel
+import com.zyphir.eccomerce.angieshop.features.store.presentation.widgets.CategoryHeader
+import com.zyphir.eccomerce.angieshop.features.store.presentation.widgets.ProductCard
 import com.zyphir.eccomerce.angieshop.shared.state.UiState
+import com.zyphir.eccomerce.angieshop.shared.widgets.LoadingWidget
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -29,70 +29,65 @@ fun StoreView() {
     val viewModel: StoreViewModel = koinViewModel()
     val state by viewModel.products.collectAsStateWithLifecycle()
 
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+    Scaffold(modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp)) { innerPadding ->
         when(state) {
-            is UiState.Waiting -> {
-
-            }
-
-            is UiState.Loading -> {
-                CircularProgressIndicator()
-            }
-
-            is UiState.Error -> {
-                val message = (state as UiState.Error).message
-                Text(text = message)
-            }
-
+            is UiState.Waiting -> {}
+            is UiState.Loading -> LoadingWidget()
+            is UiState.Error -> Text(text = (state as UiState.Error).message)
             else -> {
-                val data = (state as UiState.Done<Map<String, List<Product>>>).data
-
-                LazyColumn(
-                    modifier = Modifier.padding(innerPadding)
-                ) {
-                    data.forEach { (category, products) ->
-                        item {
-                            Text(
-                                text = category,
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(12.dp)
-                            )
-                        }
-
-                        items(products.chunked(2)) { row ->
-                            Row(modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                row.forEach { product ->
-                                    Box(
-                                        modifier = Modifier
-                                            .weight(1f)
-                                    ) {
-                                        ProductCard(product)
-                                    }
-                                }
-                            }
-
-                            //if(row.size == 1) {
-                                //Spacer(modifier = Modifier.)
-                            //}
-                        }
-                    }
-                }
+                val data = (state as UiState.Done<List<StoreUiItem>>).data
+                StoreContent(data, innerPadding)
             }
         }
     }
 }
 
 @Composable
-fun ProductCard(product: Product) {
-    Card(modifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 6.dp)
+fun StoreContent(
+    data: List<StoreUiItem>,
+    innerPadding: PaddingValues
+) {
+    val gridState = rememberLazyGridState()
+
+    LazyVerticalGrid(
+        state = gridState,
+        columns = GridCells.Fixed(2),
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = innerPadding,
+        verticalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Column(modifier = Modifier.padding(8.dp)) {
-            Text(product.name)
-            Text(product.price.toString())
+        items(
+            items = data,
+            key = {
+                when (it) {
+                    is StoreUiItem.Header -> "header_${it.title}"
+                    is StoreUiItem.Item -> it.product.id
+                }
+            },
+            contentType = {
+                when (it) {
+                    is StoreUiItem.Header -> "header"
+                    is StoreUiItem.Item -> "item"
+                }
+            },
+            span = { item ->
+                when (item) {
+                    is StoreUiItem.Header -> GridItemSpan(maxLineSpan)
+                    is StoreUiItem.Item -> GridItemSpan(1)
+                }
+            }
+        ) { item ->
+            when (item) {
+                is StoreUiItem.Header -> CategoryHeader(
+                    title = item.title,
+                    modifier = Modifier.animateItem()
+                )
+                is StoreUiItem.Item -> ProductCard(
+                    product = item.product,
+                    modifier = Modifier.animateItem()
+                )
+            }
         }
     }
 }

@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zyphir.eccomerce.angieshop.features.store.domain.model.Product
+import com.zyphir.eccomerce.angieshop.features.store.domain.model.StoreUiItem
 import com.zyphir.eccomerce.angieshop.features.store.domain.usecases.StoreUseCase
 import com.zyphir.eccomerce.angieshop.shared.state.UiState
 import kotlinx.coroutines.Dispatchers
@@ -15,8 +16,8 @@ import kotlinx.coroutines.withContext
 
 class StoreViewModel(private val storeUseCase: StoreUseCase) : ViewModel() {
 
-    private var _products = MutableStateFlow<UiState<Map<String, List<Product>>>>(UiState.Waiting)
-    val products: StateFlow<UiState<Map<String, List<Product>>>> = _products
+    private var _products = MutableStateFlow<UiState<List<StoreUiItem>>>(UiState.Waiting)
+    val products: StateFlow<UiState<List<StoreUiItem>>> = _products
 
     init {
         getProducts()

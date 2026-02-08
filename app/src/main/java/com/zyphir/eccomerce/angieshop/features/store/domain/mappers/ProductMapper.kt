@@ -2,27 +2,32 @@ package com.zyphir.eccomerce.angieshop.features.store.domain.mappers
 
 import com.zyphir.eccomerce.angieshop.features.store.domain.model.Product
 import com.zyphir.eccomerce.angieshop.features.store.domain.model.ProductBack
+import com.zyphir.eccomerce.angieshop.features.store.domain.model.StoreUiItem
 
 class ProductMapper {
-    fun mapToResponse(data: List<ProductBack>): Map<String, List<Product>> {
-        val products = mutableListOf<Product>()
-
-        data.forEach { item ->
-            products.add(Product(
-                id = item.id,
-                slug = item.slug,
-                name = item.name,
-                description = item.description,
-                price = item.price,
-                currency = item.currency,
-                category = item.productCategories[0].categories.name,
-                imageUrl = item.imageUrl,
-                isActive = item.isActive
-            ))
-        }
-
-        val productsForCategory = products.groupBy { it.category }
-
-        return productsForCategory
+    fun mapToResponse(data: List<ProductBack>): List<StoreUiItem> {
+        return data
+            .map { item ->
+                Product(
+                    id = item.id,
+                    slug = item.slug,
+                    name = item.name,
+                    description = item.description,
+                    price = item.price,
+                    currency = item.currency,
+                    category = item.productCategories.first().categories.name,
+                    imageUrl = item.imageUrl,
+                    isActive = item.isActive
+                )
+            }
+            .groupBy { it.category }
+            .flatMap { (category, products) ->
+                buildList {
+                    add(StoreUiItem.Header(category))
+                    products.forEach { product ->
+                        add(StoreUiItem.Item(product))
+                    }
+                }
+            }
     }
 }
