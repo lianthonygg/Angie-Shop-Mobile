@@ -1,4 +1,4 @@
-package com.zyphir.eccomerce.angieshop.shared.widgets
+package com.zyphir.eccomerce.angieshop.shared.presentation.widgets
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

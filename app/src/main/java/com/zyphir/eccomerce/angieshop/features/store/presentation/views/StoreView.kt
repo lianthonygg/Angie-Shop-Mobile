@@ -1,7 +1,6 @@
 package com.zyphir.eccomerce.angieshop.features.store.presentation.views
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -9,7 +8,6 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -21,22 +19,22 @@ import com.zyphir.eccomerce.angieshop.features.store.presentation.viewmodels.Sto
 import com.zyphir.eccomerce.angieshop.features.store.presentation.widgets.CategoryHeader
 import com.zyphir.eccomerce.angieshop.features.store.presentation.widgets.ProductCard
 import com.zyphir.eccomerce.angieshop.shared.state.UiState
-import com.zyphir.eccomerce.angieshop.shared.widgets.LoadingWidget
+import com.zyphir.eccomerce.angieshop.shared.presentation.widgets.LoadingWidget
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun StoreView() {
+fun StoreView(onNavigateToDetails: (String) -> Unit) {
     val viewModel: StoreViewModel = koinViewModel()
     val state by viewModel.products.collectAsStateWithLifecycle()
 
-    Scaffold(modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp)) { innerPadding ->
-        when(state) {
-            is UiState.Waiting -> {}
-            is UiState.Loading -> LoadingWidget()
-            is UiState.Error -> Text(text = (state as UiState.Error).message)
-            else -> {
-                val data = (state as UiState.Done<List<StoreUiItem>>).data
-                StoreContent(data, innerPadding)
+    when (state) {
+        is UiState.Waiting -> {}
+        is UiState.Loading -> LoadingWidget()
+        is UiState.Error -> Text(text = (state as UiState.Error).message)
+        else -> {
+            val data = (state as UiState.Done<List<StoreUiItem>>).data
+            StoreContent(data) { id ->
+                onNavigateToDetails(id)
             }
         }
     }
@@ -45,15 +43,14 @@ fun StoreView() {
 @Composable
 fun StoreContent(
     data: List<StoreUiItem>,
-    innerPadding: PaddingValues
+    onNavigateToDetails: (String) -> Unit
 ) {
     val gridState = rememberLazyGridState()
 
     LazyVerticalGrid(
         state = gridState,
         columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize(),
-        contentPadding = innerPadding,
+        modifier = Modifier.fillMaxSize().padding(vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
@@ -86,7 +83,9 @@ fun StoreContent(
                 is StoreUiItem.Item -> ProductCard(
                     product = item.product,
                     modifier = Modifier.animateItem()
-                )
+                ) {
+                    onNavigateToDetails(item.product.id)
+                }
             }
         }
     }

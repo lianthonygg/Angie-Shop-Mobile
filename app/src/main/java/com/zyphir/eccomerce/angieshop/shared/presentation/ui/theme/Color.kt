@@ -1,4 +1,4 @@
-package com.zyphir.eccomerce.angieshop.ui.theme
+package com.zyphir.eccomerce.angieshop.shared.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

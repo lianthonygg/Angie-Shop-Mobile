@@ -20,27 +20,7 @@ import org.koin.dsl.module
 
 val appModule = module {
     viewModel { StoreViewModel(get()) }
-
-//    single<ImageLoader> {
-//        val context: Context = get()
-//        ImageLoader.Builder(context)
-//            .memoryCache {
-//                MemoryCache.Builder()
-//                    .maxSizePercent(context)
-//                    .build()
-//            }
-//            .diskCache {
-//                DiskCache.Builder()
-//                    .directory(context.cacheDir.resolve("coil_images"))
-//                    .maxSizePercent(0.02)
-//                    .build()
-//            }
-//            .crossfade(true)
-//            .build()
-//    }
 }
-
-
 
 val supabaseModule = module {
     single {

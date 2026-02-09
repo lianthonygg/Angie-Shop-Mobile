@@ -1,6 +1,5 @@
-package com.zyphir.eccomerce.angieshop.ui.theme
+package com.zyphir.eccomerce.angieshop.shared.presentation.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
