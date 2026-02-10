@@ -23,13 +23,13 @@ fun ProductCard(product: Product, modifier: Modifier = Modifier, onToggle: () ->
 
     ElevatedCard(
         modifier = modifier
-        .fillMaxWidth(),
+            .fillMaxWidth(),
         onClick = onToggle
     ) {
         Column(
             modifier = modifier
-            .fillMaxWidth()
-            .wrapContentHeight()
+                .fillMaxWidth()
+                .wrapContentHeight()
         ) {
             Box(modifier = Modifier.heightIn(max = 200.dp)) {
                 AsyncImage(

@@ -1,39 +1,41 @@
 package com.zyphir.eccomerce.angieshop.features.product.presentation.views
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
+import com.zyphir.eccomerce.angieshop.features.product.domain.model.Product
+import com.zyphir.eccomerce.angieshop.features.product.presentation.components.ProductAppBar
+import com.zyphir.eccomerce.angieshop.features.product.presentation.components.ProductContent
+import com.zyphir.eccomerce.angieshop.features.product.presentation.viewmodels.ProductViewModel
+import com.zyphir.eccomerce.angieshop.shared.presentation.widgets.LoadingWidget
+import com.zyphir.eccomerce.angieshop.shared.state.UiState
+import org.koin.androidx.compose.koinViewModel
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductView(navController: NavHostController, productId: String) {
+fun ProductView(navController: NavHostController, slug: String) {
+    val viewModel: ProductViewModel = koinViewModel()
+    val state by viewModel.product.collectAsStateWithLifecycle()
+
+    viewModel.getProduct(slug)
+
     Scaffold(
-        modifier = Modifier
-            .fillMaxSize(),
-        topBar = {
-            TopAppBar(
-                title = { Text("Detalles") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
+        modifier = Modifier.fillMaxSize(),
+        topBar = { ProductAppBar(navController) },
+        content = { innerPadding ->
+            when (state) {
+                is UiState.Waiting -> {}
+                is UiState.Loading -> LoadingWidget()
+                is UiState.Error -> Text(text = (state as UiState.Error).message)
+                else -> {
+                    val data = (state as UiState.Done<Product>).data
+                    ProductContent(innerPadding, data)
                 }
-            )
+            }
         }
-    ) { innerPadding ->
-        Box(modifier = Modifier.padding(innerPadding)) {
-            Text("Detalle Del Productooo $productId")
-        }
-    }
+    )
 }

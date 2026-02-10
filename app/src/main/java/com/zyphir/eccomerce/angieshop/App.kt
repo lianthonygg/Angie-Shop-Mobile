@@ -8,6 +8,7 @@ import coil3.disk.DiskCache
 import coil3.disk.directory
 import coil3.memory.MemoryCache
 import coil3.request.crossfade
+import com.zyphir.eccomerce.angieshop.features.product.di.productModule
 import com.zyphir.eccomerce.angieshop.shared.modules.appModule
 import com.zyphir.eccomerce.angieshop.shared.modules.productMapperModule
 import com.zyphir.eccomerce.angieshop.shared.modules.storeRepositoryModule
@@ -26,7 +27,8 @@ class App: Application(), SingletonImageLoader.Factory {
                 supabaseModule,
                 storeRepositoryModule,
                 storeUseCaseModule,
-                productMapperModule
+                productMapperModule,
+                productModule
             )
         }
     }

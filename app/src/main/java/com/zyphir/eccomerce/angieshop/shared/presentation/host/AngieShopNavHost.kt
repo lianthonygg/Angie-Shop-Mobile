@@ -50,9 +50,9 @@ fun AngieShopNavHost(navController: NavHostController) {
         }
         composable(
             route = MainRouter.Details.route,
-            arguments = listOf(navArgument("productId") { type = NavType.StringType })
+            arguments = listOf(navArgument("slug") { type = NavType.StringType })
         ) { backStackEntry ->
-            val productId = backStackEntry.arguments?.getString("productId") ?: "Unknown"
+            val productId = backStackEntry.arguments?.getString("slug") ?: "Unknown"
             ProductView(navController, productId)
         }
     }

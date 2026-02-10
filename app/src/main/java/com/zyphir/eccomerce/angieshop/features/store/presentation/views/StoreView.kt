@@ -50,7 +50,9 @@ fun StoreContent(
     LazyVerticalGrid(
         state = gridState,
         columns = GridCells.Fixed(2),
-        modifier = Modifier.fillMaxSize().padding(vertical = 8.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(vertical = 8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
@@ -80,6 +82,7 @@ fun StoreContent(
                     title = item.title,
                     modifier = Modifier.animateItem()
                 )
+
                 is StoreUiItem.Item -> ProductCard(
                     product = item.product,
                     modifier = Modifier.animateItem()

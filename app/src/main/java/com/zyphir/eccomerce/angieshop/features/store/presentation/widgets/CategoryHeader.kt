@@ -15,7 +15,8 @@ fun CategoryHeader(title: String, modifier: Modifier) {
     Row(
         modifier = Modifier
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center) {
+        horizontalArrangement = Arrangement.Center
+    ) {
         Text(
             text = title,
             style = MaterialTheme.typography.titleLarge,
