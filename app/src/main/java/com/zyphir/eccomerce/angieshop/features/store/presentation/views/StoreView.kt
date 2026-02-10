@@ -33,8 +33,8 @@ fun StoreView(onNavigateToDetails: (String) -> Unit) {
         is UiState.Error -> Text(text = (state as UiState.Error).message)
         else -> {
             val data = (state as UiState.Done<List<StoreUiItem>>).data
-            StoreContent(data) { id ->
-                onNavigateToDetails(id)
+            StoreContent(data) { slug ->
+                onNavigateToDetails(slug)
             }
         }
     }
@@ -87,7 +87,7 @@ fun StoreContent(
                     product = item.product,
                     modifier = Modifier.animateItem()
                 ) {
-                    onNavigateToDetails(item.product.id)
+                    onNavigateToDetails(item.product.slug)
                 }
             }
         }

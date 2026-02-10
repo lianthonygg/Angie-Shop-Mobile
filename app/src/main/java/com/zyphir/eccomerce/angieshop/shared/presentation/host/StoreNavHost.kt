@@ -49,8 +49,8 @@ fun StoreNavHost(rootNavController: NavHostController, tabNavController: NavHost
         }
     ) {
         composable(BottomNavRouter.Store.route) {
-            StoreView { productId ->
-                rootNavController.navigate(MainRouter.Details.createRoute(productId))
+            StoreView { slug ->
+                rootNavController.navigate(MainRouter.Details.createRoute(slug))
             }
         }
 

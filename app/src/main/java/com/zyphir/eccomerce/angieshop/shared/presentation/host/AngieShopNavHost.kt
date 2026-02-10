@@ -52,8 +52,8 @@ fun AngieShopNavHost(navController: NavHostController) {
             route = MainRouter.Details.route,
             arguments = listOf(navArgument("slug") { type = NavType.StringType })
         ) { backStackEntry ->
-            val productId = backStackEntry.arguments?.getString("slug") ?: "Unknown"
-            ProductView(navController, productId)
+            val slug = backStackEntry.arguments?.getString("slug") ?: "Unknown"
+            ProductView(navController, slug)
         }
     }
 }

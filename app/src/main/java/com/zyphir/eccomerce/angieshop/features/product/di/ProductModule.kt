@@ -2,6 +2,7 @@ package com.zyphir.eccomerce.angieshop.features.product.di
 
 import com.zyphir.eccomerce.angieshop.features.product.data.datasource.ProductDataSource
 import com.zyphir.eccomerce.angieshop.features.product.data.repository.ProductRepositoryImpl
+import com.zyphir.eccomerce.angieshop.features.product.domain.mappers.ProductMapper
 import com.zyphir.eccomerce.angieshop.features.product.domain.repository.ProductRepository
 import com.zyphir.eccomerce.angieshop.features.product.domain.usecases.ProductUseCase
 import com.zyphir.eccomerce.angieshop.features.product.presentation.viewmodels.ProductViewModel
@@ -15,6 +16,10 @@ val productModule = module {
 
     single<ProductRepository> {
         ProductRepositoryImpl(get())
+    }
+
+    single {
+        ProductMapper()
     }
 
     single {

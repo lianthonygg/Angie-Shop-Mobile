@@ -10,6 +10,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.zyphir.eccomerce.angieshop.shared.presentation.host.StoreNavHost
 import com.zyphir.eccomerce.angieshop.shared.presentation.widgets.BottomNavigationBar
+import com.zyphir.eccomerce.angieshop.shared.presentation.widgets.StoreAppBar
 
 @Composable
 fun StoreScreen(rootNavController: NavHostController) {
@@ -20,6 +21,12 @@ fun StoreScreen(rootNavController: NavHostController) {
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
+        topBar = {
+            StoreAppBar(
+                navController = tabNavController,
+                route = currentRoute?.route ?: ""
+            )
+        },
         bottomBar = {
             BottomNavigationBar(tabNavController, currentRoute)
         }
