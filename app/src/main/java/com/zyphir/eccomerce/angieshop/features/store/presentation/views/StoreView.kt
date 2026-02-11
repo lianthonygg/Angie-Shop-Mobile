@@ -16,8 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zyphir.eccomerce.angieshop.features.store.domain.model.StoreUiItem
 import com.zyphir.eccomerce.angieshop.features.store.presentation.viewmodels.StoreViewModel
-import com.zyphir.eccomerce.angieshop.features.store.presentation.widgets.CategoryHeader
-import com.zyphir.eccomerce.angieshop.features.store.presentation.widgets.ProductCard
+import com.zyphir.eccomerce.angieshop.features.store.presentation.components.CategoryHeader
+import com.zyphir.eccomerce.angieshop.features.store.presentation.components.ProductCard
+import com.zyphir.eccomerce.angieshop.features.store.presentation.components.ProductSkeletonList
 import com.zyphir.eccomerce.angieshop.shared.state.UiState
 import com.zyphir.eccomerce.angieshop.shared.presentation.widgets.LoadingWidget
 import org.koin.androidx.compose.koinViewModel
@@ -29,7 +30,7 @@ fun StoreView(onNavigateToDetails: (String) -> Unit) {
 
     when (state) {
         is UiState.Waiting -> {}
-        is UiState.Loading -> LoadingWidget()
+        is UiState.Loading -> ProductSkeletonList()
         is UiState.Error -> Text(text = (state as UiState.Error).message)
         else -> {
             val data = (state as UiState.Done<List<StoreUiItem>>).data
@@ -52,7 +53,7 @@ fun StoreContent(
         columns = GridCells.Fixed(2),
         modifier = Modifier
             .fillMaxSize()
-            .padding(vertical = 8.dp),
+            .padding(8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
