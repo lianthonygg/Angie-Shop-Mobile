@@ -1,4 +1,4 @@
-package com.zyphir.eccomerce.angieshop.features.store.presentation.widgets
+package com.zyphir.eccomerce.angieshop.features.store.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
