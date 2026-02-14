@@ -1,5 +1,5 @@
 [versions]
-agp = "9.0.0"
+agp = "9.0.1"
 coilCompose = "3.3.0"
 coreKtx = "1.17.0"
 junit = "4.13.2"
@@ -8,14 +8,15 @@ espressoCore = "3.7.0"
 koinAndroid = "4.1.1"
 ktorAndroid = "3.4.0"
 lifecycleRuntimeKtx = "2.10.0"
-activityCompose = "1.12.2"
-kotlin = "2.0.21"
-composeBom = "2024.09.00"
+activityCompose = "1.12.4"
+kotlin = "2.3.0"
+composeBom = "2026.02.00"
 navigationCompose = "2.9.7"
 supabaseKt = "3.3.0"
-foundation = "1.10.2"
+foundation = "1.10.3"
 room = "2.8.4"
-ksp = "2.0.21-1.0.26"
+ksp = "2.3.4"
+nav3Core = "1.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -50,11 +51,14 @@ supabase-storage-kt = { module = "io.github.jan-tennert.supabase:storage-kt", ve
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "foundation" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+
+androidx-navigation3-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "nav3Core" }
+androidx-navigation3-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "nav3Core" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp" , version.ref = "ksp"}
-room = { id = "androidx.room", version.ref = "room" }

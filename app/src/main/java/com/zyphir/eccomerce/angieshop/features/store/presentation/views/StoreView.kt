@@ -1,6 +1,7 @@
 package com.zyphir.eccomerce.angieshop.features.store.presentation.views
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -20,11 +21,10 @@ import com.zyphir.eccomerce.angieshop.features.store.presentation.components.Cat
 import com.zyphir.eccomerce.angieshop.features.store.presentation.components.ProductCard
 import com.zyphir.eccomerce.angieshop.features.store.presentation.components.ProductSkeletonList
 import com.zyphir.eccomerce.angieshop.shared.state.UiState
-import com.zyphir.eccomerce.angieshop.shared.presentation.widgets.LoadingWidget
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun StoreView(onNavigateToDetails: (String) -> Unit) {
+fun StoreView(paddingValues: PaddingValues, navigateToDetails: (String) -> Unit) {
     val viewModel: StoreViewModel = koinViewModel()
     val state by viewModel.products.collectAsStateWithLifecycle()
 
@@ -34,8 +34,8 @@ fun StoreView(onNavigateToDetails: (String) -> Unit) {
         is UiState.Error -> Text(text = (state as UiState.Error).message)
         else -> {
             val data = (state as UiState.Done<List<StoreUiItem>>).data
-            StoreContent(data) { slug ->
-                onNavigateToDetails(slug)
+            StoreContent(modifier = Modifier.padding(paddingValues), data) { slug ->
+                navigateToDetails(slug)
             }
         }
     }
@@ -43,6 +43,7 @@ fun StoreView(onNavigateToDetails: (String) -> Unit) {
 
 @Composable
 fun StoreContent(
+    modifier: Modifier,
     data: List<StoreUiItem>,
     onNavigateToDetails: (String) -> Unit
 ) {
