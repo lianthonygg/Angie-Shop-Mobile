@@ -13,11 +13,11 @@ import androidx.navigation.NavHostController
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProductAppBar(navController: NavHostController) {
+fun ProductAppBar(navigateBack: () -> Unit) {
     TopAppBar(
         title = { Text("Detalles") },
         navigationIcon = {
-            IconButton(onClick = { navController.popBackStack() }) {
+            IconButton(onClick = { navigateBack() }) {
                 Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
             }
         }

@@ -1,4 +1,4 @@
-package com.zyphir.eccomerce.angieshop.shared.presentation.effects
+package com.zyphir.eccomerce.angieshop.shared.core.ex
 
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode

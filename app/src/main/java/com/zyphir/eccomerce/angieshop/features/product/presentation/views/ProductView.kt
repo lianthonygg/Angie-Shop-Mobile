@@ -1,6 +1,5 @@
 package com.zyphir.eccomerce.angieshop.features.product.presentation.views
 
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -8,17 +7,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import com.zyphir.eccomerce.angieshop.features.product.domain.model.Product
 import com.zyphir.eccomerce.angieshop.features.product.presentation.components.ProductAppBar
 import com.zyphir.eccomerce.angieshop.features.product.presentation.components.ProductContent
 import com.zyphir.eccomerce.angieshop.features.product.presentation.viewmodels.ProductViewModel
-import com.zyphir.eccomerce.angieshop.shared.presentation.widgets.LoadingWidget
+import com.zyphir.eccomerce.angieshop.shared.presentation.components.LoadingWidget
 import com.zyphir.eccomerce.angieshop.shared.state.UiState
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun ProductView(navController: NavHostController, slug: String) {
+fun ProductView(slug: String, navigateBack: () -> Unit) {
     val viewModel: ProductViewModel = koinViewModel()
     val state by viewModel.product.collectAsStateWithLifecycle()
 
@@ -26,7 +24,7 @@ fun ProductView(navController: NavHostController, slug: String) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { ProductAppBar(navController) },
+        topBar = { ProductAppBar(navigateBack) },
         content = { innerPadding ->
             when (state) {
                 is UiState.Waiting -> {}
