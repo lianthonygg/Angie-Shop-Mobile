@@ -10,6 +10,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.zyphir.eccomerce.angieshop.features.product.domain.model.Product
 import com.zyphir.eccomerce.angieshop.features.product.presentation.components.ProductAppBar
 import com.zyphir.eccomerce.angieshop.features.product.presentation.components.ProductContent
+import com.zyphir.eccomerce.angieshop.features.product.presentation.components.ProductSkeleton
 import com.zyphir.eccomerce.angieshop.features.product.presentation.viewmodels.ProductViewModel
 import com.zyphir.eccomerce.angieshop.shared.presentation.components.LoadingWidget
 import com.zyphir.eccomerce.angieshop.shared.state.UiState
@@ -25,14 +26,14 @@ fun ProductView(slug: String, navigateBack: () -> Unit) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = { ProductAppBar(navigateBack) },
-        content = { innerPadding ->
+        content = { paddingValues ->
             when (state) {
                 is UiState.Waiting -> {}
-                is UiState.Loading -> LoadingWidget()
+                is UiState.Loading -> ProductSkeleton(paddingValues)
                 is UiState.Error -> Text(text = (state as UiState.Error).message)
                 else -> {
                     val data = (state as UiState.Done<Product>).data
-                    ProductContent(innerPadding, data)
+                    ProductContent(paddingValues, data)
                 }
             }
         }

@@ -1,6 +1,7 @@
 package com.zyphir.eccomerce.angieshop.features.store.presentation.views
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -28,14 +29,20 @@ fun StoreView(paddingValues: PaddingValues, navigateToDetails: (String) -> Unit)
     val viewModel: StoreViewModel = koinViewModel()
     val state by viewModel.products.collectAsStateWithLifecycle()
 
-    when (state) {
-        is UiState.Waiting -> {}
-        is UiState.Loading -> ProductSkeletonList()
-        is UiState.Error -> Text(text = (state as UiState.Error).message)
-        else -> {
-            val data = (state as UiState.Done<List<StoreUiItem>>).data
-            StoreContent(modifier = Modifier.padding(paddingValues), data) { slug ->
-                navigateToDetails(slug)
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues)
+    ) {
+        when (state) {
+            is UiState.Waiting -> {}
+            is UiState.Loading -> ProductSkeletonList()
+            is UiState.Error -> Text(text = (state as UiState.Error).message)
+            else -> {
+                val data = (state as UiState.Done<List<StoreUiItem>>).data
+                StoreContent(data) { slug ->
+                    navigateToDetails(slug)
+                }
             }
         }
     }
@@ -43,7 +50,6 @@ fun StoreView(paddingValues: PaddingValues, navigateToDetails: (String) -> Unit)
 
 @Composable
 fun StoreContent(
-    modifier: Modifier,
     data: List<StoreUiItem>,
     onNavigateToDetails: (String) -> Unit
 ) {
@@ -52,8 +58,9 @@ fun StoreContent(
     LazyVerticalGrid(
         state = gridState,
         columns = GridCells.Fixed(2),
-        modifier = modifier
-            .fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(8.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {

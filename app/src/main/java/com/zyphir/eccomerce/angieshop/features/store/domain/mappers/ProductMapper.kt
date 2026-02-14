@@ -13,7 +13,7 @@ class ProductMapper {
                     slug = item.slug,
                     name = item.name,
                     description = item.description,
-                    price = item.price,
+                    price = item.price.toInt(),
                     currency = item.currency,
                     category = item.productCategories.first().categories.name,
                     imageUrl = item.imageUrl,

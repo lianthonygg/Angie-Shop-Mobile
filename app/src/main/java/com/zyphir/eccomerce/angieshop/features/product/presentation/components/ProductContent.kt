@@ -54,7 +54,7 @@ fun ProductContent(innerPadding: PaddingValues, product: Product) {
                     .fillMaxWidth()
                     .height(400.dp),
             ) { page ->
-                Box(modifier = Modifier.height(400.dp)) {
+                Box(modifier = Modifier.height(400.dp).padding(horizontal = 8.dp)) {
                     AsyncImage(
                         model = "https://fanzjptylyuvwvlotopk.supabase.co/storage/v1/render/image/public/product-images/${product.productImages[page].imageUrl}?width=384&resize=contain&quality=80",
                         contentDescription = product.name,

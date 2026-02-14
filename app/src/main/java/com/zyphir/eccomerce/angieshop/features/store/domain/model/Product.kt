@@ -26,7 +26,7 @@ data class Product(
     val slug: String,
     val name: String,
     val description: String,
-    val price: Double,
+    val price: Int,
     val currency: String,
     val category: String,
     val imageUrl: String,
