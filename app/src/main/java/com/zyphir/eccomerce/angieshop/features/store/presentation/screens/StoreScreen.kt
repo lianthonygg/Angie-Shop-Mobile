@@ -4,7 +4,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.zyphir.eccomerce.angieshop.features.store.presentation.components.StoreAppBar
+import com.zyphir.eccomerce.angieshop.features.store.presentation.components.AppBar
 import com.zyphir.eccomerce.angieshop.features.store.presentation.views.StoreView
 
 @Composable
@@ -12,7 +12,7 @@ fun StoreScreen(navigateToDetails: (String) -> Unit, bottomBar: @Composable (() 
     Scaffold(
         modifier = Modifier
             .fillMaxSize(),
-        topBar = { StoreAppBar() },
+        topBar = { AppBar() },
         bottomBar = { bottomBar() }
     ) { paddingValues ->
         StoreView(paddingValues) { navigateToDetails(it) }

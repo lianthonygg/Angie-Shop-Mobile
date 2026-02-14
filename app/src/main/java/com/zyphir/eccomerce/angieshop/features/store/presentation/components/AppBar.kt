@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StoreAppBar() {
+fun AppBar() {
     TopAppBar(
         title = { Text(text = "Tienda") },
     )

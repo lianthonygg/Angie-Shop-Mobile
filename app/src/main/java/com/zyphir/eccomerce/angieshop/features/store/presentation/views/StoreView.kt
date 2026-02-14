@@ -52,9 +52,8 @@ fun StoreContent(
     LazyVerticalGrid(
         state = gridState,
         columns = GridCells.Fixed(2),
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
+        modifier = modifier
+            .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
